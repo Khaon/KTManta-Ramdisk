@@ -12,7 +12,8 @@ echo 20 > /proc/sys/vm/vfs_cache_pressure;
 
 # General Tweaks, thanks to Osmosis and Malaroths for most of this
 echo 512 > /sys/block/mmcblk0/queue/nr_requests;
-echo 256 > /sys/block/mmcblk0/queue/read_ahead_kb;
+echo 2048 > /sys/block/mmcblk0/queue/read_ahead_kb;
+echo 2048 > /sys/block/mmcblk0/bdi/read_ahead_kb;
 echo 2 > /sys/block/mmcblk0/queue/rq_affinity;
 echo 0 > /sys/block/mmcblk0/queue/nomerges;
 echo 0 > /sys/block/mmcblk0/queue/rotational;
@@ -23,6 +24,7 @@ echo 8192 > /proc/sys/vm/min_free_kbytes
 # Cache Tweaks, thanks to brees75 for this stuff
 echo 2048 > /sys/devices/virtual/bdi/0:18/read_ahead_kb
 echo 2048 > /sys/devices/virtual/bdi/0:19/read_ahead_kb
+echo 2048 > /sys/devices/virtual/bdi/0:21/read_ahead_kb
 echo 2048 > /sys/devices/virtual/bdi/1:0/read_ahead_kb
 echo 256 > /sys/devices/virtual/bdi/1:1/read_ahead_kb
 echo 256 > /sys/devices/virtual/bdi/1:2/read_ahead_kb

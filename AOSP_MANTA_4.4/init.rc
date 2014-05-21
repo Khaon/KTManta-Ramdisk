@@ -580,6 +580,11 @@ service sshd /system/bin/start-ssh
     class main
     disabled
 
+service post-init /sbin/post-init.sh
+    class core
+    user root
+    oneshot
+
 service mdnsd /system/bin/mdnsd
     class main
     user mdnsr
