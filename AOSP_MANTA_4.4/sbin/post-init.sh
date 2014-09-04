@@ -7,13 +7,14 @@ echo 2048 > /proc/sys/kernel/random/write_wakeup_threshold;
 echo 256000000 > /proc/sys/kernel/shmmax;
 echo 1024000 > /proc/sys/net/core/rmem_max;
 echo 1024000 > /proc/sys/net/core/wmem_max;
-echo 10 > /proc/sys/vm/swappiness;
-echo 20 > /proc/sys/vm/vfs_cache_pressure;
+echo 0 > /proc/sys/vm/swappiness;
+echo 50 > /proc/sys/vm/vfs_cache_pressure;
+echo 1 > /sys/kernel/mm/ksm/run
+echo 1 > /sys/kernel/mm/ksm/deferred_timer
 
 # General Tweaks, thanks to Osmosis and Malaroths for most of this
 echo 512 > /sys/block/mmcblk0/queue/nr_requests;
-echo 2048 > /sys/block/mmcblk0/queue/read_ahead_kb;
-echo 2048 > /sys/block/mmcblk0/bdi/read_ahead_kb;
+echo 512 > /sys/block/mmcblk0/queue/read_ahead_kb;
 echo 2 > /sys/block/mmcblk0/queue/rq_affinity;
 echo 0 > /sys/block/mmcblk0/queue/nomerges;
 echo 0 > /sys/block/mmcblk0/queue/rotational;
@@ -22,10 +23,9 @@ echo 0 > /sys/block/mmcblk0/queue/iostats;
 echo 8192 > /proc/sys/vm/min_free_kbytes
 
 # Cache Tweaks, thanks to brees75 for this stuff
-echo 2048 > /sys/devices/virtual/bdi/0:18/read_ahead_kb
-echo 2048 > /sys/devices/virtual/bdi/0:19/read_ahead_kb
-echo 2048 > /sys/devices/virtual/bdi/0:21/read_ahead_kb
-echo 2048 > /sys/devices/virtual/bdi/1:0/read_ahead_kb
+echo 512 > /sys/devices/virtual/bdi/0:18/read_ahead_kb
+echo 512 > /sys/devices/virtual/bdi/0:19/read_ahead_kb
+echo 512 > /sys/devices/virtual/bdi/1:0/read_ahead_kb
 echo 256 > /sys/devices/virtual/bdi/1:1/read_ahead_kb
 echo 256 > /sys/devices/virtual/bdi/1:2/read_ahead_kb
 echo 256 > /sys/devices/virtual/bdi/1:3/read_ahead_kb
@@ -41,7 +41,7 @@ echo 256 > /sys/devices/virtual/bdi/1:12/read_ahead_kb
 echo 256 > /sys/devices/virtual/bdi/1:13/read_ahead_kb
 echo 256 > /sys/devices/virtual/bdi/1:14/read_ahead_kb
 echo 256 > /sys/devices/virtual/bdi/1:15/read_ahead_kb
-echo 2048 > /sys/devices/virtual/bdi/7:0/read_ahead_kb
+echo 512 > /sys/devices/virtual/bdi/7:0/read_ahead_kb
 echo 256 > /sys/devices/virtual/bdi/7:1/read_ahead_kb
 echo 256 > /sys/devices/virtual/bdi/7:2/read_ahead_kb
 echo 256 > /sys/devices/virtual/bdi/7:3/read_ahead_kb
@@ -80,11 +80,11 @@ echo 256 > /sys/devices/virtual/bdi/7:35/read_ahead_kb
 echo 256 > /sys/devices/virtual/bdi/7:36/read_ahead_kb
 echo 256 > /sys/devices/virtual/bdi/7:37/read_ahead_kb
 echo 256 > /sys/devices/virtual/bdi/7:38/read_ahead_kb
-echo 2048 > /sys/devices/virtual/bdi/179:0/read_ahead_kb
-echo 2048 > /sys/devices/virtual/bdi/179:8/read_ahead_kb
-echo 2048 > /sys/devices/virtual/bdi/179:16/read_ahead_kb
-echo 2048 > /sys/devices/virtual/bdi/253:0/read_ahead_kb
-echo 2048 > /sys/devices/virtual/bdi/254:0/read_ahead_kb
+echo 512 > /sys/devices/virtual/bdi/179:0/read_ahead_kb
+echo 512 > /sys/devices/virtual/bdi/179:8/read_ahead_kb
+echo 512 > /sys/devices/virtual/bdi/179:16/read_ahead_kb
+echo 512 > /sys/devices/virtual/bdi/253:0/read_ahead_kb
+echo 512 > /sys/devices/virtual/bdi/254:0/read_ahead_kb
 echo 256 > /sys/devices/virtual/bdi/254:1/read_ahead_kb
 echo 256 > /sys/devices/virtual/bdi/254:2/read_ahead_kb
 echo 256 > /sys/devices/virtual/bdi/254:3/read_ahead_kb

@@ -69,6 +69,7 @@ on boot
 on fs
     mkdir /factory 0775 radio radio
 
+    exec /sbin/busybox sh /check_fs.sh
     mount_all /fstab.manta
     mount ext4 /dev/block/platform/dw_mmc.0/by-name/efs /factory rw remount
     restorecon /factory

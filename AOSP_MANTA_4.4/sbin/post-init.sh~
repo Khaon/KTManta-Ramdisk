@@ -11,6 +11,7 @@ echo 0 > /proc/sys/vm/swappiness;
 echo 50 > /proc/sys/vm/vfs_cache_pressure;
 echo 1 > /sys/kernel/mm/ksm/run
 
+
 # General Tweaks, thanks to Osmosis and Malaroths for most of this
 echo 512 > /sys/block/mmcblk0/queue/nr_requests;
 echo 512 > /sys/block/mmcblk0/queue/read_ahead_kb;
