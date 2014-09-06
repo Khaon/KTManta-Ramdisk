@@ -9,8 +9,6 @@ echo 1024000 > /proc/sys/net/core/rmem_max;
 echo 1024000 > /proc/sys/net/core/wmem_max;
 echo 0 > /proc/sys/vm/swappiness;
 echo 50 > /proc/sys/vm/vfs_cache_pressure;
-echo 1 > /sys/kernel/mm/ksm/run
-echo 1 > /sys/kernel/mm/ksm/deferred_timer
 
 # General Tweaks, thanks to Osmosis and Malaroths for most of this
 echo 512 > /sys/block/mmcblk0/queue/nr_requests;
