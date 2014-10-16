@@ -33,27 +33,25 @@ $BB mount -o remount,rw /;
 
 $BB mv /fstab.manta /fstab.org;
 
-FS_CACHE0=$(eval $(/sbin/blkid /dev/block/mmcblk0p7 | $BB cut -c 24-); $BB echo $TYPE);
-FS_DATA0=$(eval $(/sbin/blkid /dev/block/mmcblk0p9 | $BB cut -c 24-); $BB echo $TYPE);
-FS_SYSTEM0=$(eval $(/sbin/blkid /dev/block/mmcblk0p8 | $BB cut -c 24-); $BB echo $TYPE);
+FS_CACHE0=`/sbin/blkid /dev/block/mmcblk0p7 | grep "f2fs"`;
+FS_DATA0=`/sbin/blkid /dev/block/mmcblk0p9 | grep "f2fs"`;
+FS_SYSTEM0=`/sbin/blkid /dev/block/mmcblk0p8 | grep "f2fs"`;
 
-if [ "$FS_SYSTEM0" == "ext4" ]; then
+if [ "$FS_SYSTEM0" == "" ]; then
 	$BB sed -i "s/# EXT4SYS//g" /fstab.tmp;
-elif [ "$FS_SYSTEM0" == "f2fs" ]; then
+else
 	$BB sed -i "s/# F2FSSYS//g" /fstab.tmp;
 fi;
 
-if [ "$FS_CACHE0" == "ext4" ]; then
+if [ "$FS_CACHE0" == "" ]; then
 	$BB sed -i "s/# EXT4CAC//g" /fstab.tmp;
-elif [ "$FS_CACHE0" == "f2fs" ]; then
-	$BB sed -i "s/# F2FSCAC//g" /fstab.tmp;
 else
 	$BB sed -i "s/# F2FSCAC//g" /fstab.tmp;
 fi;
 
-if [ "$FS_DATA0" == "ext4" ]; then
+if [ "$FS_DATA0" == "" ]; then
 	$BB sed -i "s/# EXT4DAT//g" /fstab.tmp;
-elif [ "$FS_DATA0" == "f2fs" ]; then
+else
 	$BB sed -i "s/# F2FSDAT//g" /fstab.tmp;
 fi;
 
