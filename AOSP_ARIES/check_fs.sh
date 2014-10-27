@@ -31,10 +31,10 @@
 
 /sbin/busybox mv /fstab.aries /fstab.org;
 
-DATA=`/sbin/blkid /dev/block/mmcblk0p26 | grep "f2fs"`
-CACHE=`/sbin/blkid /dev/block/mmcblk0p25 | grep "f2fs"`
-SYSTEM=`/sbin/blkid /dev/block/mmcblk0p23 | grep "f2fs"`
-SYSTEM1=`/sbin/blkid /dev/block/mmcblk0p24 | grep "f2fs"`
+DATA=`/sbin/blkid /dev/block/mmcblk0p26 | grep "f2fs"`;
+CACHE=`/sbin/blkid /dev/block/mmcblk0p25 | grep "f2fs"`;
+SYSTEM=`/sbin/blkid /dev/block/mmcblk0p23 | grep "f2fs"`;
+SYSTEM1=`/sbin/blkid /dev/block/mmcblk0p24 | grep "f2fs"`;
 
 if [ "${CACHE}" != ""  ]; then
 	/sbin/busybox sed -i 's,#CACHE_ISF2FS,,' /fstab.tmp;
