@@ -63,6 +63,9 @@ on boot
 on fs
     mkdir /factory 0775 radio radio
 
+    # Patch fstab accordingly to partition's file system
+    exec /sbin/patch_fstab.sh
+
     mount_all /fstab.manta
     restorecon_recursive /factory
     mount ext4 /dev/block/platform/dw_mmc.0/by-name/efs /factory ro remount
