@@ -1,4 +1,4 @@
-#!/sbin/busybox sh
+#!/sbin/busybox ash
 # Copyright (c) 2012, Code Aurora Forum. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -29,32 +29,27 @@
 
 /sbin/busybox mount -o remount,rw /;
 
-/sbin/busybox mv /fstab.aries /fstab.org;
+# check partition filesystem
+getfs() { /sbin/busybox blkid $1 | /sbin/busybox cut -d\" -f4; }
 
-DATA=`/sbin/blkid /dev/block/mmcblk0p26 | grep "f2fs"`;
-CACHE=`/sbin/blkid /dev/block/mmcblk0p25 | grep "f2fs"`;
-SYSTEM=`/sbin/blkid /dev/block/mmcblk0p23 | grep "f2fs"`;
-SYSTEM1=`/sbin/blkid /dev/block/mmcblk0p24 | grep "f2fs"`;
+# patch the fstab accordingly to the partitions' file systems
+patch_fstab() {
+  bb=/sbin/busybox;
+  cache=/dev/block/platform/dw_mmc.0/by-name/cache;
+  data=/dev/block/platform/dw_mmc.0/by-name/userdata;
+  system=/dev/block/platform/dw_mmc.0/by-name/system;
+  system1=/dev/block/platform/dw_mmc.0/by-name/system1;
+  prefix=/dev/block/platform/dw_mmc.0/by-name;
+  device=aries;
 
-if [ "${CACHE}" != ""  ]; then
-	/sbin/busybox sed -i 's,#CACHE_ISF2FS,,' /fstab.tmp;
-else
-	/sbin/busybox sed -i 's,#CACHE_ISEXT4,,' /fstab.tmp;
-fi;
-if [ "${DATA}" != "" ]; then
-	/sbin/busybox sed -i 's,#DATA_ISF2FS,,' /fstab.tmp;
-else
-	/sbin/busybox sed -i 's,#DATA_ISEXT4,,' /fstab.tmp;
-fi;
-if [ "${SYSTEM}" != "" ]; then
-	/sbin/busybox sed -i 's,#SYS_ISF2FS,,' /fstab.tmp;
-else
-	/sbin/busybox sed -i 's,#SYS_ISEXT4,,' /fstab.tmp;
-fi;
-if [ "${SYSTEM1}" != "" ]; then
-	/sbin/busybox sed -i 's,#SYS1_ISF2FS,,' /fstab.tmp;
-else
-	/sbin/busybox sed -i 's,#SYS1_ISEXT4,,' /fstab.tmp;
-fi;
-
-/sbin/busybox mv /fstab.tmp /fstab.aries;
+  # swap out entries for filesystems as detected
+  for i in $system $system1 $cache $data; do
+    fstype=`getfs $i`;
+    fsentry=`$bb grep $i $ramdisk/fstab-$fstype.$device`;
+    if [ "$fsentry" ]; then
+      ui_print "${i#${prefix}}'s file system is $fstype";
+      $bb sed -i "s|^$i.*|$fsentry|" $ramdisk/fstab.$device;
+    fi;
+  done;
+  $bb rm -f /fstab-*;
+}
