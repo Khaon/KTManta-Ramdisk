@@ -39,6 +39,7 @@ dropbox                                   u:object_r:system_server_service:s0
 entropy                                   u:object_r:system_server_service:s0
 ethernet                                  u:object_r:system_server_service:s0
 fingerprint                               u:object_r:system_server_service:s0
+fscheck                                   u:object_r:init:s0
 gfxinfo                                   u:object_r:system_server_service:s0
 hardware                                  u:object_r:system_server_service:s0
 hdmi_control                              u:object_r:system_server_service:s0
